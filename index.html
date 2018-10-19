@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>test page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <style>
+      * {margin: 0; padding: 0; font-family: 'Roboto Condensed', sans-serif; font-weight: bold;}
+      body {background: black; overflow: hidden; animation:bg 1s ease; animation-play-state: paused;}
+
+      video {display: none;}
+      .mask {text-align: center;
+            height: 5px; position: relative; top:40vh;
+            overflow: hidden;
+            }
+      .maskRobot {position: absolute; left:50%; margin-top: 150px;
+                  transform:translate(-50%,0);
+                  height: 20px; overflow: hidden;
+                  }
+      .lylic {font-size: 16vh;
+              color:red; position: relative;
+              animation:glitch .1s ease infinite alternate; animation-play-state: paused;
+              }
+              @keyframes glitch {
+                0% {filter: hue-rotate(0deg);}
+                46% {opacity: 1;}
+                47% {opacity: 0;}
+                48% {opacity: 1;}
+                49% {filter: hue-rotate(0deg);}
+                50% {filter: hue-rotate(90deg);}
+                51% {filter: hue-rotate(90deg);}
+                52% {filter: hue-rotate(180deg);}
+                53% {filter: hue-rotate(0deg);}
+                100% {filter: hue-rotate(0deg);}
+              }
+      .robot1 {height:60vh; position: relative; filter: blur(3px);}
+      .gifwrap {width:93vh;
+                position: absolute; left:50%; top:50%;
+                transform:translate(-50%,-50%); font-size: 0;
+                opacity: 0; transform-origin:center;
+                text-align: center;
+               animation:gifwrap 16s ease infinite alternate; animation-play-state: paused;}
+      .gifwrap img{height:24vh; animation:hue 4s ease infinite alternate;}
+      @keyframes gifwrap {
+        0% {transform:translate(-50%,-50%) scale(1) rotateZ(0deg);}
+        50% {transform:translate(-50%,-50%) scale(1.2) rotateZ(10deg);}
+        100% {transform:translate(-50%,-50%) scale(1.0) rotateZ(0deg);}
+        }
+      @keyframes hue {
+        0% {filter: hue-rotate(0deg); }
+        100% {filter: hue-rotate(360deg); }
+      }
+      .apple {width:200%; height: 30vh;
+                  position: absolute;
+                  }
+      .apple img{width:30vh;}
+      .mackWrap {animation: mack 20s linear; left:100%;  animation-play-state: paused;}
+      @keyframes mack {
+        0% {left:100%;}
+        100% {left:-200%;}
+      }
+      .MackbookWrap {top:30vh;
+                     animation: macbook 26.6s linear;
+                    text-align: right;  animation-play-state: paused;}
+      @keyframes macbook {
+        0% {transform: translateX(-100%);}
+        100% {transform: translateX(100%);}
+      }
+      .ipadWrap {animation: ipad 20s linear; left:100%; top:60vh; animation-play-state: paused;}
+      @keyframes ipad {
+        0% {left:100%;}
+        100% {left:-200%;}
+      }
+      .boxContain {width:600px; height: 300px;
+                position: absolute; top:50%; left:50%;
+                transform: translate(-50%,-50%); font-size: 0;}
+      .boxWrap {display: inline-block; overflow: hidden;}
+      .box {width:30px; height: 30px; background: white; transition: all .2s ease;
+            animation: box .5s ease infinite alternate;}
+      @keyframes box {
+        0% {background: white;}
+        100% {background: red;}
+      }
+      .boxWrap:nth-child(1) {display: none;}
+      .random {color:white; font-size: 2em;
+               position: absolute; left:50%; bottom:25%;
+              transform:translate(-50%,-50%);
+              letter-spacing:10px;
+            animation: random .5s ease infinite alternate;}
+      @keyframes random {
+        0% {color: white;}
+        100% {color: red;}
+      }
+      #center {position: absolute; left:50%; top:50%;
+              transform:translate(-50%,-50%);}
+      #maze {position: absolute; animation: maze 20s linear ; animation-play-state: paused; opacity:0;}
+      @keyframes maze {
+        0% {transform:scale(4); opacity: 0; filter:hue-rotate(0deg);}
+        50% {transform:scale(1); opacity: 1; filter:hue-rotate(0deg);}
+        100% {transform:scale(1);opacity: 0; filter:hue-rotate(360deg);}
+      }
+    </style>
+  </head>
+  <body>
+    <img id="center" src=""/>
+    <img id="maze" src="6.png"/>
+    <div class="boxContain">
+      <div class="boxWrap">
+        <div class="box"></div>
+      </div>
+  </div>
+  <p class="random"></p>
+  <script>
+    function e(){
+      var boxContain = document.querySelector(".boxContain");
+      var boxWrap = document.querySelector(".boxWrap");
+      var random = document.querySelector(".random");
+
+      for(var i=0;i<200;i++){
+          var cloneBoxWrap = boxWrap.cloneNode(true);
+          cloneBoxWrap.classList.add("num");
+          boxContain.appendChild(cloneBoxWrap);
+      }
+      var num = document.querySelectorAll(".num");
+      var crd =0;
+      var rd = setInterval(function(){
+        crd++;
+        var mtr = Math.random();
+        var ntr = Math.random();
+        for(var o=0;o<200;o++){
+          if(o%2==0){
+            num[o].childNodes[1].style.transform = "translateX("+-mtr*50+"px)";
+          }else if (o%2==1){
+            num[o].childNodes[1].style.transform = "translateX("+-ntr*50+"px)";
+          }
+        }
+        random.innerHTML = Math.random()*100000000000000000;
+        if(crd==140){
+          clearInterval(rd);
+          random.innerHTML = "";
+          for(var u=0;u<200;u++){
+            num[u].remove();
+          }
+        }
+      })
+
+    }
+  </script>
+    <div class="mackWrap apple">
+      <script>
+        for(var i = 0; i<5;i++){
+            document.write(`<img class="mack" src="3.gif">`);
+        }
+      </script>
+    </div>
+    <div class="MackbookWrap apple">
+      <script>
+        for(var i = 0; i<5;i++){
+            document.write(`<img class="mack" src="4.gif">`);
+        }
+      </script>
+    </div>
+    <div class="ipadWrap apple">
+      <script>
+        for(var i = 0; i<5;i++){
+            document.write(`<img class="mack" src="5.gif">`);
+        }
+      </script>
+    </div>
+    <div class="maskRobot">
+      <img class="robot1" src="">
+    </div>
+    <video id="bgm" src="bgm.mp4" preload="auto"></video>
+    <div class="mask">
+      <p class="lylic">
+          <i class="fa" style="cursor:pointer" onclick="a()"><b>Hello, World</b></i>
+      </p>
+    </div>
+    <div class="gifwrap">
+      <img class="robot2" src="2.gif"/>
+    </div>
+    <script>
+    var gifwrap = document.querySelector(".gifwrap");
+    function d(){
+      var h = 0;
+
+      var robot2 = document.querySelector(".robot2");
+      gifwrap.style.opacity = 1;
+      var RobotTail = setInterval(function(){
+        h++;
+        if(h==27) {
+          h=27;
+          clearInterval(RobotTail);
+        }
+          var cloneRobot2 = robot2.cloneNode(true);
+          gifwrap.appendChild(cloneRobot2);
+
+      },230)
+    }
+
+    var maskRobot = document.querySelector(".maskRobot");
+    for(xr = 0; xr<38;xr++){
+      var cloneMaskRobot = maskRobot.cloneNode(true);
+      cloneMaskRobot.id = "clonedRobot";
+      document.body.appendChild(cloneMaskRobot);
+    }
+    var clonedRobot = document.querySelectorAll("#clonedRobot");
+    for(var yr=0;yr<38;yr++){
+      clonedRobot[yr].style.top = yr*20+"px";
+      clonedRobot[yr].childNodes[1].style.top = -yr*20+"px";
+    }
+
+    var mask = document.querySelector(".mask");
+    for(var x = 0; x<38;x++){
+      var cloneMask = mask.cloneNode(true);
+      cloneMask.id = "cloned";
+      document.body.appendChild(cloneMask);
+    }
+    var cloned = document.querySelectorAll("#cloned");
+    for(var y = 0; y<38; y++){
+      cloned[y].childNodes[1].style.top = -5*y+"px";
+    };
+    function c(){
+      var t = 0;
+      var cit = setInterval(function(){
+        t++;
+        if(t>200){
+          t=0;
+          clearInterval(cit);
+        }
+        for(var bb = 0; bb<38;bb++){
+          if(bb%2==0){
+            clonedRobot[bb].style.left= 50+Math.sin(t)/2 +"%";
+          }else if(bb%2==1){
+            clonedRobot[bb].style.left= 50-Math.sin(t)/2 +"%";
+          }
+        }
+      },100)
+    }
+    function b(){
+      var v = 0;
+      var cib = setInterval(function(){
+        v++;
+        if(v>50){
+          clearInterval(cib);
+          v=0;
+        }
+        for(var b = 0; b<38;b++){
+            if(b%2==0){
+              cloned[b].style.left= Math.sin(v)*3 +"px";
+            }else if(b%2==1){
+              cloned[b].style.left= -Math.sin(v)*3 +"px";
+            }
+        }
+      },100)
+    };
+      var lylic =
+      `Buy it, Use it, Break it, Fix it,
+      Trash it, Change it, Mail, Upgrade it,
+      Charge it, Point it, Zoom it, Press it,
+      Snap it, Work it, Quick, Erase it,
+      Write it, Cut it, Paste it, Save it,
+      Load it, Check it, Quick, Rewrite it,
+      Plug it, Play it, Burn it, Rip it,
+      Drag and, Drop it, Zip, Unzip it,
+      Lock it, Fill it, Curl it, Find it,
+      View it, Code it, Jam, Unlock it,
+      Surf it, Scroll it, Pose it, Click it,
+      Cross it, Crack it, Twitch, Update it,
+      Name it, Read it, Tune it, Print it,
+      Scan it, Send it, Fax, Rename it,
+      Touch it, Bring it, Pay it, Watch it,
+      Turn it, Leave it, Stop, Format it`;
+
+      var splitLylic = lylic.split(",");
+      var o = -1;
+
+      function a(){
+        bgm.play();
+        var Interval = setInterval(function(){
+        o++;
+        if(o==81){
+          clearInterval(Interval);
+          for(var iii=0; iii<36; iii++){
+            cloned[iii].remove();
+            clonedRobot[iii].remove();
+          }
+        }
+        var lylic = document.querySelectorAll(".lylic");
+        var robot1 = document.querySelectorAll(".robot1");
+        for(var i = 0; i<splitLylic.length;i++){
+          lylic[i].innerHTML = splitLylic[o];
+          if(o==32){
+          robot1[i].setAttribute("src","1.gif");
+          c();
+          }
+          if(o>63){
+            lylic[i].innerHTML = "";
+            robot1[i].setAttribute("src","");
+          }
+          if(o>66){
+            lylic[i].innerHTML = "Technologic";
+            lylic[i].style.animationPlayState = "running";
+            b();
+
+          }
+          if(o>68){
+            lylic[i].innerHTML = "";
+          }
+          if(o>70){
+            lylic[i].innerHTML = "Technologic";
+            b();
+          }
+          if(o>72){
+            lylic[i].innerHTML = "";
+          }
+          if(o>74){
+            lylic[i].innerHTML = "Technologic";
+            b();
+          }
+          if(o>76){
+            lylic[i].innerHTML = "";
+          }
+          if(o>78){
+            lylic[i].innerHTML = "Technologic";
+            b();
+          }
+          if(o>80){
+            lylic[i].innerHTML = "";
+            lylic[i].style.animationPlayState = "paused";
+          }
+
+        }
+      },460);
+      setTimeout(function(){
+        var gifwrap = document.querySelector(".gifwrap");
+        var pp = 0;
+        d();
+        setInterval(function(){
+          pp++;
+          if(pp==16){
+            gifwrap.style.animationPlayState ="running";
+
+          };
+          if(pp==32){
+            var robot2 = document.querySelectorAll(".robot2");
+            for(var iii=0; iii<28; iii++){
+              robot2[iii].remove();
+            }
+            e();
+          }
+          if(pp==48){
+            document.querySelector(".mackWrap").style.animationPlayState = "running";
+            document.querySelector(".MackbookWrap").style.animationPlayState = "running";
+            document.querySelector(".ipadWrap").style.animationPlayState = "running";
+          }
+          if(pp==60){
+            center.setAttribute("src","2.gif")
+          }
+          if(pp==76){
+            maze.style.animationPlayState = "running";
+          }
+        },465)
+      },38000);
+    }
+
+    </script>
+  </body>
+</html>
